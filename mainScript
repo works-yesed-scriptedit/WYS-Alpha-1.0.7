@@ -1,7 +1,17 @@
 print("Loading Start")
---New draggable Orion Lib script for hub creations!
-local OrionLib = loadstring(game:HttpGet(('https://pastebin.com/raw/WRUyYTdY')))()
 
+-- テレポート後に自動でこのスクリプトを再実行させる設定
+local success, err = pcall(function()
+	local scriptUrl = "https://raw.githubusercontent.com/works-yesed-scriptedit/WYS-Alpha-1.0.7/refs/heads/main/mainScript"
+	queueonteleport("loadstring(game:HttpGet('" .. scriptUrl .. "'))()")
+end)
+
+if not success then
+	warn("queueonteleport セット失敗:", err)
+end
+
+-- New draggable Orion Lib script for hub creations!
+local OrionLib = loadstring(game:HttpGet(('https://pastebin.com/raw/WRUyYTdY')))()
 
 local Window = OrionLib:MakeWindow({
     Name = "WorksYesed Hub",
