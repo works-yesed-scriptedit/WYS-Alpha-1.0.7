@@ -1,4 +1,4 @@
-print("Loading Start")
+print("ロード開始")
 
 -- テレポート後に自動でこのスクリプトを再実行させる設定
 local success, err = pcall(function()
@@ -13,6 +13,7 @@ end
 -- New draggable Orion Lib script for hub creations!
 local OrionLib = loadstring(game:HttpGet(('https://pastebin.com/raw/WRUyYTdY')))()
 
+--ウィンドウの作成
 local Window = OrionLib:MakeWindow({
     Name = "WorksYesed Hub",
     HidePremium = false,
@@ -20,7 +21,7 @@ local Window = OrionLib:MakeWindow({
     ConfigFolder = "WorksYesed Hub" -- Put the name of your hub or script here!
 })
 
-print("Successfully executed.")
+print("ロード完了")
 
 OrionLib:MakeNotification({
 	Name = "NB_sub1作",
@@ -29,28 +30,19 @@ OrionLib:MakeNotification({
 	Time = 5
 })
 
---[[
-Title = <string> - The title of the notification.
-Content = <string> - The content of the notification.
-Image = <string> - The icon of the notification.
-Time = <number> - The duration of the notfication.
-]]
-
+--キャラクタータブの作成
 local CharacterTab = Window:MakeTab({
 	Name = "Character",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
 
---[[
-Name = <string> - The name of the tab.
-Icon = <string> - The icon of the tab.
-PremiumOnly = <bool> - Makes the tab accessible to Sirus Premium users only.
-]]
+--セクションの作成
 local Section = CharacterTab:AddSection({
 	Name = "Player"
 })
 
+--Walk Speed TextBox
 CharacterTab:AddTextbox({
     Name = "WalkSpeed",
     Default = "",
@@ -76,6 +68,7 @@ CharacterTab:AddTextbox({
     end
 })
 
+--Jump Power TextBox
 CharacterTab:AddTextbox({
     Name = "JumpPower",
     Default = "",
@@ -114,6 +107,7 @@ CharacterTab:AddTextbox({
     end,
 })
 
+--Fov TextBox
 CharacterTab:AddTextbox({
 	Name = "Fov",
 	Default = "70",
@@ -129,6 +123,7 @@ CharacterTab:AddTextbox({
 	end	  
 })
 
+--Gravity TextBox
 CharacterTab:AddTextbox({
 	Name = "Gravity",
 	Default = "196.2",
@@ -144,33 +139,19 @@ CharacterTab:AddTextbox({
 	end	  
 })
 
---[[
-Name = <string> - The name of the textbox.
-Default = <string> - The default value of the textbox.
-TextDisappear = <bool> - Makes the text disappear in the textbox after losing focus.
-Callback = <function> - The function of the textbox.
-]]
+--三人称 button
+CharacterTab:AddButton({
+	Name = "三人称",
+	Callback = function()
+		print("button pressed")
+		local player = game.Players.LocalPlayer
+		player.CameraMode = Enum.CameraMode.Classic
+		player.CameraMaxZoomDistance = 128
+		player.CameraMinZoomDistance = 0.5
+	end    
+})
 
-Callback = function()
-	print("button pressed")
-	local player = game.Players.LocalPlayer
-	player.CameraMode = Enum.CameraMode.Classic
-	player.CameraMaxZoomDistance = 128
-	player.CameraMinZoomDistance = 0.5
-end
-
---[[
-Name = <string> - The name of the button.
-Callback = <function> - The function of the button.
-]]
-
---[[
-Name = <string> - The name of the textbox.
-Default = <string> - The default value of the textbox.
-TextDisappear = <bool> - Makes the text disappear in the textbox after losing focus.
-Callback = <function> - The function of the textbox.
-]]
-
+--Infinite Jump Toggle
 local infiniteJumpConnection = nil  -- イベント接続を保持する変数
 
 CharacterTab:AddToggle({
@@ -204,6 +185,7 @@ CharacterTab:AddToggle({
     end,
 })
 
+--Float Toggle
 local platformPart -- 外に保持
 local moveConnection
 
@@ -252,6 +234,7 @@ CharacterTab:AddToggle({
 	end
 })
 
+--Noclip Toggle
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
@@ -286,6 +269,7 @@ CharacterTab:AddToggle({
     end
 })
 
+--Freeze Toggle
 local player = game.Players.LocalPlayer
 local savedVelocity = nil
 local savedAnchoredStates = {}
@@ -372,26 +356,20 @@ CharacterTab:AddToggle({
 })
 
 --==ここより下は別のタブになります==--
+
+--タブの作成
 local ToolTab = Window:MakeTab({
 	Name = "Tool",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
 
---[[
-Name = <string> - The name of the tab.
-Icon = <string> - The icon of the tab.
-PremiumOnly = <bool> - Makes the tab accessible to Sirus Premium users only.
-]]
-
+--セクションの作成
 local Section = ToolTab:AddSection({
 	Name = "Client"
 })
 
---[[
-Name = <string> - The name of the section.
-]]
-
+--Teleport Tool button
 ToolTab:AddButton({
 	Name = "Teleport Tool",
 	Callback = function()
@@ -409,11 +387,7 @@ tool.Parent = game.Players.LocalPlayer.Backpack
   	end    
 })
 
---[[
-Name = <string> - The name of the button.
-Callback = <function> - The function of the button.
-]]
-
+--Btools button
 ToolTab:AddButton({
 	Name = "BTools",
 	Callback = function()
@@ -446,6 +420,7 @@ grabTool.Parent = backpack
   	end    
 })
 
+--Invisible Tool button
 local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
@@ -543,12 +518,14 @@ local LocalPlayer = Players.LocalPlayer
 
 local selectedPlayerName = nil
 
+--タブの作成
 local TeleportTab = Window:MakeTab({
 	Name = "Teleport Menu",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
 
+--セクションの作成
 local Section = TeleportTab:AddSection({
 	Name = "Player Select"
 })
@@ -591,7 +568,7 @@ Players.PlayerRemoving:Connect(function()
 	task.defer(UpdatePlayerList)
 end)
 
--- テレポートボタン
+--Teleport
 TeleportTab:AddButton({
 	Name = "Teleport",
 	Callback = function()
@@ -619,7 +596,7 @@ TeleportTab:AddButton({
 	end
 })
 
--- 視点切り替えトグル
+-- View Toggle
 TeleportTab:AddToggle({
 	Name = "View",
 	Default = false,
@@ -660,16 +637,19 @@ TeleportTab:AddToggle({
 
 --ここから新しいタブ
 
+--タブの作成
 local ServerTab = Window:MakeTab({
 	Name = "Server",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
 
+--セクションの作成
 ServerTab:AddSection({
 	Name = "Place"
 })
 
+--Rejoin button
 ServerTab:AddButton({
 	Name = "Rejoin",
 	Callback = function()
@@ -678,8 +658,9 @@ ServerTab:AddButton({
 	end    
 })
 
+--ServerHop button
 ServerTab:AddButton({
-	Name = "Server Hop",
+	Name = "ServerHop",
 	Callback = function()
 		print("Server hopping...")
 		local TeleportService = game:GetService("TeleportService")
@@ -711,13 +692,10 @@ ServerTab:AddButton({
 	end
 })
 
+--セクションの作成
 local Section = ServerTab:AddSection({
 	Name = "ServerInfo"
 })
-
---[[
-Name = <string> - The name of the section.
-]]
 
 -- サーバー時間を動的に表示するために、Tickの差分を利用
 local startTime = tick() -- スクリプト開始時の時間を記録
