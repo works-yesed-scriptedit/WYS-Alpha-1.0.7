@@ -1,2 +1,2 @@
 # WYS-Alpha-1.0.7
-Lua
+loadstring(game:HttpGet(""))()
